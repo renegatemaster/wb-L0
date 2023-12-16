@@ -1,0 +1,38 @@
+version: "3.7"
+
+volumes:
+  pg_data:
+
+services:
+  wb-db:
+    container_name: wb-db
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: wb_user
+      POSTGRES_PASSWORD: wb_password
+      POSTGRES_DB: wb
+      PGDATA: /var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+  # nats:
+  #   container_name: nats-main
+  #   image: nats:latest
+  #   environment:
+  #     NATS_CLUSTER_ID: test-cluster
+  #   command: ["--cluster_name", "test-cluster"]
+  #   ports:
+  #     - "4222:4222"
+  #   restart: unless-stopped
+
+  nats-streaming:
+    container_name: nats-main
+    image: nats-streaming:latest
+    command: ["--cluster_id", "test-cluster"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    restart: unless-stopped
