@@ -161,7 +161,7 @@ func getOrder(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(order.Data)
 }
 
-// Wrapper for getProduct() to get order from cache
+// Wrapper for getOrder() to get order from cache
 func checkCache(f httprouter.Handle) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		uid := p.ByName("uid")
